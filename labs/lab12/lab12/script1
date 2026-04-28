@@ -1,0 +1,5 @@
+#!/bin/bash
+cp $0 ~/backup/
+tar -cf ~/backup/script1.tar -C ~/backup script1
+rm ~/backup/script1
+echo "Backup complited"

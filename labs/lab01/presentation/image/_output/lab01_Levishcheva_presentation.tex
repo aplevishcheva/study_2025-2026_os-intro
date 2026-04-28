@@ -1,0 +1,631 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  ignorenonframetext,
+  aspectratio=169,
+  russian,
+]{beamer}
+\newif\ifbibliography
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolshorizontal
+% remove section numbering
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{section title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{subsection title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+\usepackage{caption}
+% Make caption package work with longtable
+\makeatletter
+\def\fnum@table{\tablename~\thetable}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+\ifLuaTeX
+\usepackage[bidi=basic,provide=*]{babel}
+\else
+\usepackage[bidi=default,provide=*]{babel}
+\fi
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+\usepackage[]{csquotes}
+
+\IfFileExists{plex-otf.sty}{
+  %% Full TeXlive
+  % \usepackage[%
+  %   % math,
+  %   RM={Scale=0.94},SS={Scale=0.94},SScon={Scale=0.94},TT={Scale=MatchLowercase,FakeStretch=0.9},DefaultFeatures={Ligatures=Common}
+  % ]{plex-otf}
+}{
+  %% TinyTeX
+  \usepackage{libertine}
+}
+
+%%% Load theme
+% https://deic.uab.cat/~iblanes/beamer_gallery/
+\IfFileExists{beamerthemegotham.sty}{
+  %% Full TeXlive
+  \usetheme{gotham}
+  \gothamset{
+    numbering=totalpagenumber,
+    parttocframe default=off,
+    sectiontocframe default=off,
+    subsectiontocframe default=off,
+  }
+}{
+  %% TinyTeX
+  \usetheme{Madrid}
+}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Содержание}
+\else
+  \newcommand\contentsname{Содержание}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Список иллюстраций}
+\else
+  \newcommand\listfigurename{Список иллюстраций}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Список таблиц}
+\else
+  \newcommand\listtablename{Список таблиц}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Рисунок}
+\else
+  \newcommand\figurename{Рисунок}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Таблица}
+\else
+  \newcommand\tablename{Таблица}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Список}
+\newcommand*\listoflistings{\listof{codelisting}{Листинги}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Лабораторная работа № 2},
+  pdfauthor={Левищева Анастасия Петровна},
+  pdflang={ru-RU},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Лабораторная работа № 2}
+\subtitle{Архитектура компьютеров и операционные системы}
+\author{Левищева Анастасия Петровна}
+\date{2026-03-07}
+
+\begin{document}
+\frame{\titlepage}
+
+\renewcommand*\contentsname{Содержание}
+\begin{frame}[allowframebreaks]
+  \frametitle{Содержание}
+  \setcounter{tocdepth}{1}
+  \tableofcontents
+\end{frame}
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+
+\section{Информация}\label{ux438ux43dux444ux43eux440ux43cux430ux446ux438ux44f}
+
+\begin{frame}{Докладчик}
+\phantomsection\label{ux434ux43eux43aux43bux430ux434ux447ux438ux43a}
+\begin{columns}[c]
+\begin{column}{0.7\linewidth}
+\begin{itemize}[<+->]
+\tightlist
+\item
+  Левищева Анастасия Петровна
+\item
+  group NKAbd-02-25
+\item
+  Российский университет дружбы народов им. П. Лумумбы
+\item
+  {[}1032252643@rudn.ru{]}
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Цель
+работы}\label{ux446ux435ux43bux44c-ux440ux430ux431ux43eux442ux44b}
+
+\begin{frame}{Цель работы}
+Целью данной работы является приобретение практических навыков установки
+операционной системы на виртуальную машину, настройки минимально
+необходимых для дальнейшей работы сервисов.
+\end{frame}
+
+\section{Задание}\label{ux437ux430ux434ux430ux43dux438ux435}
+
+\begin{frame}[fragile]{Задание}
+\begin{verbatim}
+Дождитесь загрузки графического окружения и откройте терминал. В окне терминала проанализируйте последовательность загрузки системы, выполнив команду dmesg. Можно просто просмотреть вывод этой команды:
+
+dmesg | less
+
+Можно использовать поиск с помощью grep:
+
+dmesg | grep -i "то, что ищем"
+
+Получите следующую информацию.
+    Версия ядра Linux (Linux version).
+    Частота процессора (Detected Mhz processor).
+    Модель процессора (CPU0).
+    Объём доступной оперативной памяти (Memory available).
+    Тип обнаруженного гипервизора (Hypervisor detected).
+    Тип файловой системы корневого раздела.
+    Последовательность монтирования файловых систем.
+\end{verbatim}
+\end{frame}
+
+\section{Выполнение лабораторной
+работы}\label{ux432ux44bux43fux43eux43bux43dux435ux43dux438ux435-ux43bux430ux431ux43eux440ux430ux442ux43eux440ux43dux43eux439-ux440ux430ux431ux43eux442ux44b}
+
+\begin{frame}{Устанавливаем виртуальную машину.}
+\phantomsection\label{ux443ux441ux442ux430ux43dux430ux432ux43bux438ux432ux430ux435ux43c-ux432ux438ux440ux442ux443ux430ux43bux44cux43dux443ux44e-ux43cux430ux448ux438ux43dux443.}
+Папка виртуальных машин. Значения по умолчанию Linux: \$HOME/VirtualBox
+VMs.
+\end{frame}
+
+\begin{frame}{Установочный образ}
+\phantomsection\label{ux443ux441ux442ux430ux43dux43eux432ux43eux447ux43dux44bux439-ux43eux431ux440ux430ux437}
+Перенесем установочный образ в папку /var/tmp/имя\_пользователя/iso:
+mkdir -p \enquote{\$(vboxmanage list systemproperties \textbar{} grep
+\enquote*{Default machine folder:} \textbar{} cut -d':' -f2 \textbar{}
+tr -d ' ')/iso}
+
+mv Fedora-Sway-Live-x86\_64-39-1.5.iso \enquote{\$(vboxmanage list
+systemproperties \textbar{} grep \enquote*{Default machine folder:}
+\textbar{} cut -d':' -f2 \textbar{} tr -d ' ')/iso}
+\end{frame}
+
+\begin{frame}{Настройка хост-клавиши}
+\phantomsection\label{ux43dux430ux441ux442ux440ux43eux439ux43aux430-ux445ux43eux441ux442-ux43aux43bux430ux432ux438ux448ux438}
+Хост-клавишей по умолчанию является правый Ctrl.
+
+По умолчанию в дисплейных классах на клавише правый Ctrl находится
+переключатель языка ввода.
+
+Эти значения могут конфликтовать.
+\end{frame}
+
+\begin{frame}{Графический интерфейс}
+\phantomsection\label{ux433ux440ux430ux444ux438ux447ux435ux441ux43aux438ux439-ux438ux43dux442ux435ux440ux444ux435ux439ux441}
+В меню выберите Файл, Настройки.
+
+Выберите Ввод, вкладка Виртуальная машина.
+
+Выберите Сочетание клавиш в строке Хост-комбинация.
+
+Нажмите новое сочетание клавиш.
+
+Нажмите ОК, чтобы сохранить изменения.
+\end{frame}
+
+\begin{frame}{Командная строка}
+\phantomsection\label{ux43aux43eux43cux430ux43dux434ux43dux430ux44f-ux441ux442ux440ux43eux43aux430}
+Проверим текущую комбинацию для хост-клавиши:
+
+VBoxManage getextradata global GUI/Input/HostKeyCombination
+
+По умолчанию установлена комбинация 65508, соответствующая правой
+клавише Ctrl.
+
+Установите нужную клавишу (в примере клавиша Menu): VBoxManage
+setextradata global GUI/Input/HostKeyCombination 65383
+
+\begin{block}{Создадим и запустим виртуальную машину. Запускаем
+установочный образ: (рис.~\ref{fig-001}).}
+\phantomsection\label{ux441ux43eux437ux434ux430ux434ux438ux43c-ux438-ux437ux430ux43fux443ux441ux442ux438ux43c-ux432ux438ux440ux442ux443ux430ux43bux44cux43dux443ux44e-ux43cux430ux448ux438ux43dux443.-ux437ux430ux43fux443ux441ux43aux430ux435ux43c-ux443ux441ux442ux430ux43dux43eux432ux43eux447ux43dux44bux439-ux43eux431ux440ux430ux437-ux440ux438ux441.-fig-001.}
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/1.jpg}
+
+}
+
+\caption{\label{fig-001}Запуск установочного образа}
+
+\end{figure}%
+\end{block}
+
+\begin{block}{После установки: (рис.~\ref{fig-002}).}
+\phantomsection\label{ux43fux43eux441ux43bux435-ux443ux441ux442ux430ux43dux43eux432ux43aux438-ux440ux438ux441.-fig-002.}
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/2.jpg}
+
+}
+
+\caption{\label{fig-002}Вход в ОС под заданной при установке учетной
+записью.}
+
+\end{figure}%
+\end{block}
+
+\begin{block}{Войдите в ОС под заданной вами при установке учётной
+записью.}
+\phantomsection\label{ux432ux43eux439ux434ux438ux442ux435-ux432-ux43eux441-ux43fux43eux434-ux437ux430ux434ux430ux43dux43dux43eux439-ux432ux430ux43cux438-ux43fux440ux438-ux443ux441ux442ux430ux43dux43eux432ux43aux435-ux443ux447ux451ux442ux43dux43eux439-ux437ux430ux43fux438ux441ux44cux44e.}
+Нажмите комбинацию Win+Enter для запуска терминала.
+
+Переключитесь на роль супер-пользователя: sudo -i
+\end{block}
+\end{frame}
+
+\begin{frame}{Обновления}
+\phantomsection\label{ux43eux431ux43dux43eux432ux43bux435ux43dux438ux44f}
+\begin{block}{Установите средства разработки:}
+\phantomsection\label{ux443ux441ux442ux430ux43dux43eux432ux438ux442ux435-ux441ux440ux435ux434ux441ux442ux432ux430-ux440ux430ux437ux440ux430ux431ux43eux442ux43aux438}
+sudo dnf -y group install development-tools (рис.~\ref{fig-003}).
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/3.jpg}
+
+}
+
+\caption{\label{fig-003}Установка средств разработки}
+
+\end{figure}%
+\end{block}
+
+\begin{block}{Обновить все пакеты}
+\phantomsection\label{ux43eux431ux43dux43eux432ux438ux442ux44c-ux432ux441ux435-ux43fux430ux43aux435ux442ux44b}
+sudo dnf -y update
+\end{block}
+\end{frame}
+
+\begin{frame}{Повышение комфорта работы}
+\phantomsection\label{ux43fux43eux432ux44bux448ux435ux43dux438ux435-ux43aux43eux43cux444ux43eux440ux442ux430-ux440ux430ux431ux43eux442ux44b}
+Программы для удобства работы в консоли: sudo dnf -y install tmux mc
+
+Другой вариант консоли: sudo dnf -y install kitty
+\end{frame}
+
+\begin{frame}{Автоматическое обновление}
+\phantomsection\label{ux430ux432ux442ux43eux43cux430ux442ux438ux447ux435ux441ux43aux43eux435-ux43eux431ux43dux43eux432ux43bux435ux43dux438ux435}
+При необходимости можно использовать автоматическое обновление.
+
+Установка программного обеспечения: sudo dnf -y install dnf-automatic
+
+Задаёте необходимую конфигурацию в файле /etc/dnf/automatic.conf.
+
+Запустите таймер: sudo systemctl enable --now dnf-automatic.timer
+\end{frame}
+
+\begin{frame}{Отключение SELinux}
+\phantomsection\label{ux43eux442ux43aux43bux44eux447ux435ux43dux438ux435-selinux}
+В данном курсе мы не будем рассматривать работу с системой безопасности
+SELinux.
+
+Поэтому отключим его.
+
+\begin{block}{В файле /etc/selinux/config замените значение}
+\phantomsection\label{ux432-ux444ux430ux439ux43bux435-etcselinuxconfig-ux437ux430ux43cux435ux43dux438ux442ux435-ux437ux43dux430ux447ux435ux43dux438ux435}
+SELINUX=enforcing
+
+на значение
+
+SELINUX=permissive (рис.~\ref{fig-004}).
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/4.jpg}
+
+}
+
+\caption{\label{fig-004}Отключение безопасности SELinux}
+
+\end{figure}%
+\end{block}
+
+\begin{block}{Перегрузите виртуальную машину:}
+\phantomsection\label{ux43fux435ux440ux435ux433ux440ux443ux437ux438ux442ux435-ux432ux438ux440ux442ux443ux430ux43bux44cux43dux443ux44e-ux43cux430ux448ux438ux43dux443}
+sudo systemctl reboot
+\end{block}
+\end{frame}
+
+\begin{frame}{Настройка раскладки клавиатуры}
+\phantomsection\label{ux43dux430ux441ux442ux440ux43eux439ux43aux430-ux440ux430ux441ux43aux43bux430ux434ux43aux438-ux43aux43bux430ux432ux438ux430ux442ux443ux440ux44b}
+Войдите в ОС под заданной вами при установке учётной записью.
+
+Нажмите комбинацию Win+Enter для запуска терминала.
+
+Запустите терминальный мультиплексор tmux: tmux
+
+Создайте конфигурационный файл
+\textasciitilde/.config/sway/config.d/95-system-keyboard-config.conf:
+mkdir -p \textasciitilde/.config/sway touch
+\textasciitilde/.config/sway/config.d/95-system-keyboard-config.conf
+
+\begin{block}{Отредактируйте конфигурационный файл}
+\phantomsection\label{ux43eux442ux440ux435ux434ux430ux43aux442ux438ux440ux443ux439ux442ux435-ux43aux43eux43dux444ux438ux433ux443ux440ux430ux446ux438ux43eux43dux43dux44bux439-ux444ux430ux439ux43b}
+\textasciitilde/.config/sway/config.d/95-system-keyboard-config.conf:
+exec\_always /usr/libexec/sway-systemd/locale1-xkb-config --oneshot
+(рис.~\ref{fig-005}).
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/5.jpg}
+
+}
+
+\caption{\label{fig-005}Конфигурационный файл}
+
+\end{figure}%
+\end{block}
+
+\begin{block}{Переключитесь на роль супер-пользователя:}
+\phantomsection\label{ux43fux435ux440ux435ux43aux43bux44eux447ux438ux442ux435ux441ux44c-ux43dux430-ux440ux43eux43bux44c-ux441ux443ux43fux435ux440-ux43fux43eux43bux44cux437ux43eux432ux430ux442ux435ux43bux44f}
+sudo -i
+
+Отредактируйте конфигурационный файл
+/etc/X11/xorg.conf.d/00-keyboard.conf: Section \enquote{InputClass}
+Identifier \enquote{system-keyboard} MatchIsKeyboard \enquote{on} Option
+\enquote{XkbLayout} \enquote{us,ru} Option \enquote{XkbVariant}
+\enquote{,winkeys} Option \enquote{XkbOptions}
+\enquote{grp:rctrl\_toggle,compose:ralt,terminate:ctrl\_alt\_bksp}
+EndSection
+
+Для этого можно использовать файловый менеджер mc и его встроенный
+редактор.
+
+Перегрузите виртуальную машину: sudo systemctl reboot
+\end{block}
+\end{frame}
+
+\begin{frame}{Установка имени пользователя и названия хоста}
+\phantomsection\label{ux443ux441ux442ux430ux43dux43eux432ux43aux430-ux438ux43cux435ux43dux438-ux43fux43eux43bux44cux437ux43eux432ux430ux442ux435ux43bux44f-ux438-ux43dux430ux437ux432ux430ux43dux438ux44f-ux445ux43eux441ux442ux430}
+Если при установке виртуальной машины вы задали имяпользователя или имя
+хоста, не удовлетворяющее соглашению обименовании, то вам необходимо
+исправить это.
+
+Запустите виртуальную машину и залогиньтесь.
+
+Нажмите комбинацию Win+Enter для запуска терминала.
+
+Запустите терминальный мультиплексор tmux: tmux
+
+Переключитесь на роль супер-пользователя: sudo -i
+
+Создайте пользователя (вместо username укажите ваш логин в дисплейном
+классе): adduser -G wheel username
+
+Задайте пароль для пользователя (вместо username укажите ваш логин в
+дисплейном классе): passwd username
+
+Установите имя хоста (вместо username укажите ваш логин в дисплейном
+классе): hostnamectl set-hostname username
+
+\begin{block}{Проверьте, что имя хоста установлено верно:}
+\phantomsection\label{ux43fux440ux43eux432ux435ux440ux44cux442ux435-ux447ux442ux43e-ux438ux43cux44f-ux445ux43eux441ux442ux430-ux443ux441ux442ux430ux43dux43eux432ux43bux435ux43dux43e-ux432ux435ux440ux43dux43e}
+hostnamectl (рис.~\ref{fig-006}).
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/6.jpg}
+
+}
+
+\caption{\label{fig-006}Имя хоста}
+
+\end{figure}%
+\end{block}
+\end{frame}
+
+\begin{frame}{Установка программного обеспечения для создания
+документации}
+\phantomsection\label{ux443ux441ux442ux430ux43dux43eux432ux43aux430-ux43fux440ux43eux433ux440ux430ux43cux43cux43dux43eux433ux43e-ux43eux431ux435ux441ux43fux435ux447ux435ux43dux438ux44f-ux434ux43bux44f-ux441ux43eux437ux434ux430ux43dux438ux44f-ux434ux43eux43aux443ux43cux435ux43dux442ux430ux446ux438ux438}
+Нажмите комбинацию Win+Enter для запуска терминала.
+
+Запустите терминальный мультиплексор tmux: tmux
+
+Переключитесь на роль супер-пользователя: sudo -i
+\end{frame}
+
+\begin{frame}{Работа с языком разметки Markdown}
+\phantomsection\label{ux440ux430ux431ux43eux442ux430-ux441-ux44fux437ux44bux43aux43eux43c-ux440ux430ux437ux43cux435ux442ux43aux438-markdown}
+Средство pandoc для работы с языком разметки Markdown.
+
+Установка с помощью менеджера пакетов: sudo dnf -y install pandoc
+
+Для работы с перекрёстными ссылками мы используем пакет pandoc-crossref.
+Пакет pandoc-crossref в стандартном репозитории отсутствует. Придётся
+ставить вручную, скачав с сайта
+https://github.com/lierdakil/pandoc-crossref.
+
+При установке pandoc-crossref следует обращать внимание, для какой
+версии pandoc он скомпилён. Лучше установить pandoc и pandoc-crossref
+вручную.
+
+Скачайте необходимую версию pandoc-crossref
+(https://github.com/lierdakil/pandoc-crossref/releases). Посмотрите, для
+какой версии откомпилён pandoc-crossref. Скачайте соответствующую версию
+pandoc (https://github.com/jgm/pandoc/releases). Распакуйте архивы. Обе
+программы собраны в виде статически-линкованных бинарных файлов.
+Поместите их в каталог /usr/local/bin
+
+\begin{block}{(рис.~\ref{fig-007}).}
+\phantomsection\label{ux440ux438ux441.-fig-007.}
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/7.jpg}
+
+}
+
+\caption{\label{fig-007}Pandoc и pandoc-crossref}
+
+\end{figure}%
+\end{block}
+\end{frame}
+
+\begin{frame}{texlive}
+\phantomsection\label{texlive}
+Установим дистрибутив TeXlive: sudo dnf -y install texlive-scheme-full
+
+\#Домашнее задание
+
+\begin{block}{(рис.~\ref{fig-008}).}
+\phantomsection\label{ux440ux438ux441.-fig-008.}
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/8.jpg}
+
+}
+
+\caption{\label{fig-008}Домашнее задание(1)}
+
+\end{figure}%
+\end{block}
+
+\begin{block}{(рис.~\ref{fig-009}).}
+\phantomsection\label{ux440ux438ux441.-fig-009.}
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/9.jpg}
+
+}
+
+\caption{\label{fig-009}Домашнее задание(2)}
+
+\end{figure}%
+\end{block}
+\end{frame}
+
+\section{Выводы}\label{ux432ux44bux432ux43eux434ux44b}
+
+\begin{frame}{Выводы}
+В результате выполнения данной лабораторной работы мы провели установку
+системы Fedora Sway на виртуальную машину и её первоначальную настройку.
+\end{frame}
+
+
+
+
+\end{document}
